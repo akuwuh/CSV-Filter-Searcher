@@ -5,8 +5,8 @@ from collections import defaultdict
 breaker = False
 
 filter_condition = defaultdict(set)
-
-data = pd.read_csv("vfc/vfc.csv")
+path = "" # path for CSV
+data = pd.read_csv(path)
 
 
 while (not breaker):
@@ -73,11 +73,6 @@ while (not breaker):
             
     if add_more == False: breaker = False  
 
-filter_condition = {
-    'SCHOOL_EDUCATION_LEVEL': {'MIDDLE SCHOOL'}, 
-    'PUBLIC_OR_INDEPENDENT': {'Public School'}
-}
-
 
 print()
 print("Conditions Applied: \n")
@@ -90,11 +85,13 @@ filtered_df = df
 for column,value in filter_condition.items():
     filtered_df = filtered_df[filtered_df[column].isin(value)]
 
+export_path = "" # path to export filtered result (CSV)
+filtered_df.to_csv(export_path, index=False)
 
-filtered_df.to_csv('vfc/results.csv', index=False)
-
-with open('vfc/search_terms.txt', 'w') as f:
-    f.write(filtered_df['SCHOOL_NAME'].str.cat(sep='\n'))
+txt_path = "" # path to export specific column results to use as search terms (TXT)
+with open(txt_path, 'w') as f:
+    column_to_export = "" 
+    f.write(filtered_df[column_to_export].str.cat(sep='\n'))
 
 
 
