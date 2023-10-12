@@ -37,7 +37,7 @@ def worker():
         url_queue.task_done()
 
 def export(results):
-    file_name = 'vfc/links.csv'
+    file_name = ""  # file name + path to export
     with open(file_name, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
 
@@ -47,7 +47,8 @@ def export(results):
         for name,url in results.items():
             csv_writer.writerow([name.strip(), url, ' ', ' '])
 
-with open('vfc/search_terms.txt', 'r') as file:
+path = "" # path for search terms txt
+with open(path, 'r') as file:
     search_queries = file.readlines()
 
 num_threads = 4
